@@ -8,8 +8,12 @@ fs_permissions = [
     { access = "read", path = "./out"},
     { access = "read-write", path = "./deployments"},
     { access = "read", path = "./actual-deployments"},
+    { access = "read-write", path = "./cache" }
 ]
 gas_reports = ["DcntEth", "DecentEthRouter"]
+build_info = true
+extra_output = ['storageLayout']
+always_use_create_2_factory = true
 
 [rpc_endpoints]
 ethereum = "${ETHEREUM_RPC}"
@@ -17,13 +21,13 @@ arbitrum = "${ARBITRUM_RPC}"
 optimism = "${OPTIMISM_RPC}"
 polygon = "${POLYGON_RPC}"
 avalanche = "${AVALANCHE_RPC}"
-ftm-testnet = "${FTM_TESTNET_RPC}"
-fuji = "${FUJI_RPC}"
+fantom_testnet = "${FTM_TESTNET_RPC}"
+avalanche_fuji = "${FUJI_RPC}"
 sepolia = "${SEPOLIA_RPC}"
 zora = "${ZORA_RPC}"
 base = "${BASE_RPC}"
-zora-goerli = "${ZORA_GOERLI_RPC}"
-optimism-goerli = "${OPTIMISM_GOERLI_RPC}"
+zora_sepolia = "${ZORA_SEPOLIA_RPC}"
+optimism_sepolia = "${OPTIMISM_SEPOLIA_RPC}"
 
 fork_ethereum = "http://localhost:${FORK_ETHEREUM_PORT}"
 fork_arbitrum = "http://localhost:${FORK_ARBITRUM_PORT}"
