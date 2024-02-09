@@ -21,4 +21,7 @@
 	url = https://github.com/decentxyz/better-deployer
 [submodule "lib/forge-toolkit"]
 	path = lib/forge-toolkit
-	url = https://github.com/decentxyz/forge-toolkit
+	url = https://github.com/sphinx-labs/forge-toolkit
+[submodule "lib/sphinx"]
+	path = lib/sphinx
+	url = https://github.com/sphinx-labs/sphinx

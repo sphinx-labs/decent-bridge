@@ -14,6 +14,7 @@ import {LoadDecentBridgeDeployedContracts} from "./util/LoadDecentBridgeDeployed
 import {MultichainDeployer} from "../test/common/MultichainDeployer.sol";
 import {LoadAllChainInfo} from "forge-toolkit/LoadAllChainInfo.sol";
 import {RouterActions} from "../test/common/RouterActions.sol";
+import {Sphinx, Network} from "@sphinx-labs/contracts/SphinxPlugin.sol";
 
 contract FakeWeth is ERC20, Owned {
     constructor() ERC20("Wrapped ETH", "WETH", 18) Owned(msg.sender) {}
@@ -25,6 +26,7 @@ contract FakeWeth is ERC20, Owned {
 
 contract Common is
     Script,
+    Sphinx,
     MultichainDeployer,
     ParseChainsFromEnvVars,
     LoadDecentBridgeDeployedContracts,
@@ -36,6 +38,16 @@ contract Common is
     }
 
     function setUp() public virtual override {
+        sphinxConfig.owners = [0x4856e043a1F2CAA8aCEfd076328b4981Aca91000]; // Add owner address(es)
+        sphinxConfig.orgId = "clksrkg1v0001l00815670lu8"; // Add org ID
+        sphinxConfig.testnets = [
+            Network.sepolia,
+            Network.optimism_sepolia,
+            Network.fantom_testnet
+        ];
+        sphinxConfig.projectName = "Decent_Bridge";
+        sphinxConfig.threshold = 1;
+
         if (vm.envOr("TESTNET", false)) {
             setRuntime(ENV_TESTNET);
         } else if (vm.envOr("MAINNET", false)) {
@@ -162,8 +174,8 @@ contract WireUp is Common {
 }
 
 contract Deploy is Common {
-    function run() public {
-        string memory chain = vm.envString("chain");
+    function run() sphinx public {
+        string memory chain = networkLookup[block.chainid];
         console2.log("chain is", chain);
         deployDecentBridgeRouterAndRegisterDecentEth(chain);
     }
